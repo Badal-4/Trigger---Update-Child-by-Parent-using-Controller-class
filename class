@@ -1,0 +1,24 @@
+public class practiceClass
+{
+  public static void trgController(Map<Id,Account> accMap)
+  {
+      List<Contact> contList = new List<Contact>();
+      if(!accMap.isEmpty() )
+      {
+          List<Contact> conList = [Select Id,AccountId,Phone from Contact where AccountId IN : accMap.keySet()];
+          
+          if(!conList.isEmpty())
+          {
+              for(Contact con : conList)
+              {
+                  con.Phone = accMap.get(con.AccountId).Phone;
+                  contList.add(con);
+              }
+          }
+      }
+      if(!contList.isEmpty())
+      {
+          update contList;
+      }
+  }
+}
